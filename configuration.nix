@@ -56,8 +56,8 @@
   services.desktopManager.plasma6.enable = true;
   services.displayManager.plasma-login-manager.enable = true;
 
-  #Set niri as the defaulr session
-  services.displayManager.defaultSession = "niri";
+  #Set plasma as the defaulr session
+  services.displayManager.defaultSession = "plasma";
 
   #Dont install these packages
   #environment.plasma6.excludePackages = with pkgs.kdePackages; [
