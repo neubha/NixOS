@@ -30,6 +30,24 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # Niri Setup
+  programs.niri.enable = true;
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${config.programs.niri.package}/bin/niri-session";
+        user = "neubha";
+      };
+    };
+  };
+
+  # NixOS otherwise injects a stripped PATH via Environment= on the niri.service
+  # unit which shadows the imported user-manager PATH. Disabling the default
+  # lets niri inherit the full PATH set up by niri-session.
+  systemd.user.services.niri.enableDefaultPath = false;
+
   # Enable the GNOME Desktop Environment.
   #services.displayManager.gdm.enable = true;
   #services.desktopManager.gnome.enable = true;
@@ -37,6 +55,9 @@
   #Enable the Plasma Desktop Environment
   services.desktopManager.plasma6.enable = true;
   services.displayManager.plasma-login-manager.enable = true;
+
+  #Set niri as the defaulr session
+  services.displayManager.defaultSession = "niri";
 
   #Dont install these packages
   #environment.plasma6.excludePackages = with pkgs.kdePackages; [
@@ -85,21 +106,27 @@
   # Allow unfree packages
   #nixpkgs.config.allowUnfree = true;
 
-  # Niri Setup
-  #programs.niri.enable = true;
+  #Noctalia things
+  security.polkit.enable = true; # polkit
+  services.gnome.gnome-keyring.enable = true; # secret service
+  security.pam.services.swaylock = {};
+  programs.waybar.enable = true; # top bar
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     git
     fastfetch
-    alacritty
     zed-editor
     btop
     bun
     github-cli
-    niri
-    xwayland-satellite
+    zoxide
+
+    #Noctalia-Shell
+    noctalia-shell
+    alacritty
+    swayidle
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
