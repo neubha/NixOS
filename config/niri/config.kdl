@@ -4,7 +4,7 @@
 // https://niri-wm.github.io/niri/Configuration:-Introduction
 
 //Spawn at startup as the command says
-//Think this was the problem, lets see
+//Not the problem, but it didnt work
 //spawn-at-startup "noctalia"
 
 // Input device configuration.

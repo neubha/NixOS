@@ -33,15 +33,15 @@
   # Niri Setup
   programs.niri.enable = true;
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${config.programs.niri.package}/bin/niri-session";
-        user = "neubha";
-      };
-    };
-  };
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command = "${config.programs.niri.package}/bin/niri-session";
+  #       user = "neubha";
+  #     };
+  #   };
+  # };
 
   # NixOS otherwise injects a stripped PATH via Environment= on the niri.service
   # unit which shadows the imported user-manager PATH. Disabling the default
@@ -107,10 +107,10 @@
   #nixpkgs.config.allowUnfree = true;
 
   #Noctalia things
-  security.polkit.enable = true; # polkit
-  services.gnome.gnome-keyring.enable = true; # secret service
-  security.pam.services.swaylock = {};
-  programs.waybar.enable = true; # top bar
+  # security.polkit.enable = true; # polkit
+  # services.gnome.gnome-keyring.enable = true; # secret service
+  # security.pam.services.swaylock = {};
+  # programs.waybar.enable = true; # top bar
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -126,7 +126,7 @@
     #Noctalia-Shell
     noctalia-shell
     alacritty
-    swayidle
+    # swayidle
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
