@@ -16,6 +16,6 @@ sudo nixos-rebuild switch
 
 Now onto a directory that one will never remove
 
-git clone https://github.com/neubha.git
+git clone https://github.com/neubha/nixos.git
 
 
