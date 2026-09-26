@@ -1,4 +1,4 @@
- # Edit this configuration file to define what should be installed on
+# Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
@@ -9,11 +9,11 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
   networking.hostName = "NixOS"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -30,41 +30,12 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Niri Setup
-  programs.niri.enable = true;
-
-  # services.greetd = {
-  #   enable = true;
-  #   settings = {
-  #     default_session = {
-  #       command = "${config.programs.niri.package}/bin/niri-session";
-  #       user = "neubha";
-  #     };
-  #   };
-  # };
-
-  # NixOS otherwise injects a stripped PATH via Environment= on the niri.service
-  # unit which shadows the imported user-manager PATH. Disabling the default
-  # lets niri inherit the full PATH set up by niri-session.
-  systemd.user.services.niri.enableDefaultPath = false;
-
   # Enable the GNOME Desktop Environment.
-  #services.displayManager.gdm.enable = true;
-  #services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
-  #Enable the Plasma Desktop Environment
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.plasma-login-manager.enable = true;
-
-  #Set plasma as the defaulr session
-  services.displayManager.defaultSession = "plasma";
-
-  #Dont install these packages
-  #environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    #konsole
-    #kate
-  #];
-
+  # Enable Niri
+  programs.niri.enable = true;
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -84,7 +55,6 @@
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     # jack.enable = true;
-
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -104,29 +74,20 @@
   programs.firefox.enable = true;
 
   # Allow unfree packages
-  #nixpkgs.config.allowUnfree = true;
-
-  #Noctalia things
-  # security.polkit.enable = true; # polkit
-  # services.gnome.gnome-keyring.enable = true; # secret service
-  # security.pam.services.swaylock = {};
-  # programs.waybar.enable = true; # top bar
+  nixpkgs.config.allowUnfree = true;
+  
+  # Allow Nix Commands 
+  nix.settings.experimental-features = [ "nix-command" ];
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  #   wget
     git
-    fastfetch
-    zed-editor
-    btop
-    bun
-    github-cli
-    zoxide
-
-    #Noctalia-Shell
-    noctalia-shell
     alacritty
-    # swayidle
+    noctalia-shell
+    github-cli
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -171,4 +132,5 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "26.05"; # Did you read the comment?
+
 }
